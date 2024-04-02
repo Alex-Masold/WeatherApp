@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="search">
-      <search />
+      <search-blok/>
       <button><img src="@\components\icons\search.png" /></button>
     </div>
     <div class="weather">
@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import Search from '@/components/Search.vue'
+import SearchBlok from '@/components/SearchBlok.vue'
 </script>
 
 <style scoped>
