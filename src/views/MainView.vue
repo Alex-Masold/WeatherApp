@@ -1,119 +1,83 @@
 <template>
-  <div class="card">
-    <div class="search">
-      <search-blok/>
-      <button><img src="@\components\icons\search.png" /></button>
-    </div>
-    <div class="weather">
-      <img src="@\components\icons\clouds.png" />
-      <h1 class="temp">37°C</h1>
-      <h2 class="city">city</h2>
-      <div class="details">
-        <div class="col">
-          <img src="@\components\icons\humidity.png" />
-          <div>
-            <div class="humidity">50%</div>
-            <div>Humidity</div>
-          </div>
+    <div class="container">
+        <search-box />
+
+        <weather-box :temperature="temperature + '°C'" :description="city" />
+
+        <div class="weather-details">
+            <weather-detail
+                class="humidity"
+                :column-value="humidityValue + '%'"
+                :column-name="humidityName"
+            >
+                <font-awesome-icon class="icon" icon="fa-solid fa-water" />
+            </weather-detail>
+            <weather-detail
+                class="wind"
+                :column-value="windValue + ' Km/h'"
+                :column-name="windName"
+            >
+                <font-awesome-icon class="icon" icon="fa-solid fa-wind" />
+            </weather-detail>
         </div>
-        <div class="col">
-          <img src="@\components\icons\wind.png" />
-          <div>
-            <div class="wind">15 km/h</div>
-            <div>Wind Speed</div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script setup>
-import SearchBlok from '@/components/SearchBlok.vue'
+import { ref } from 'vue';
+import SearchBox from '@/components/SearchBox.vue';
+import WeatherDetail from '@/components/WeatherDetail.vue';
+import WeatherBox from '@/components/WeatherBox.vue';
+
+const temperature = ref(10);
+const city = ref('Moscow');
+
+const windValue = ref(10);
+const windName = ref('Wind Speed');
+const humidityValue = ref(50);
+const humidityName = ref('Humidity');
 </script>
 
 <style scoped>
-.card {
-  display: flex;
-  flex-direction: column;
-
-  text-align: center;
-
-  margin: 100px auto;
-  padding: 20px 35px;
-
-  width: 90%;
-  max-width: 470px;
-
-  background-color: #6dace3;
-
-  border-radius: 30px;
+img {
+    pointer-events: none;
 }
 
-.search {
-  display: flex;
-
-  gap: 10px;
-
-  width: 100%;
-
-  align-items: center;
-  justify-content: space-between;
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    min-width: 400px;
+    /* height: 13%; */
+    background: teal;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    padding: 1.5em 2em;
+    overflow: hidden;
+    border-radius: 30px;
+    transition: 0.3s ease-out;
 }
 
-.search button {
-  width: 60px;
-  height: 60px;
-
-  background: #ebfffc;
-
-  border: 0;
-  border-radius: 30px;
-  outline: 0;
-
-  cursor: pointer;
-}
-.search button img {
-  width: 32px;
+.weather-details {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
 }
 
-.details {
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 20px;
-  margin-top: 50px;
-}
-.col {
-  display: flex;
-  align-items: center;
-  text-align: left;
-}
-.col img {
-  width: 40px;
-  margin-right: 10px;
+.weather-details .humidity {
+    padding-left: 20px;
+    justify-content: flex-start;
 }
 
-.humidity,
-.wind {
-  font-size: 32px;
-  margin: -5px;
+.weather-details .wind {
+    padding-right: 20px;
+    justify-content: flex-end;
 }
 
-.weather h1 {
-  font-size: 80px;
-  font-weight: 500;
-}
-.weather h2 {
-  font-size: 45px;
-  font-weight: 400;
-
-  margin-top: -10px;
-}
-.weather-icon {
-  width: 170px;
-  margin-top: 30px;
+.weather-details .icon {
+    font-size: 3em;
+    margin-right: 10px;
+    margin-top: 6px;
 }
 </style>
