@@ -1,23 +1,48 @@
 <template>
     <div class="weather-box">
-        <img src="@\components\icons\clouds.png" />
-        <p class="temperature">{{ props.temperature }}</p>
+        <font-awesome-icon class="icon" :icon="icons.get(props.weather) || props.weather" />
+        <p class="temperature">{{ props.temperature }}°C</p>
         <p class="description">{{ props.description }}</p>
     </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 const props = defineProps({
     temperature: {
         type: String,
-        required: true,
+        required: true
     },
     description: {
         type: String,
-        required: true,
+        required: true
+    },
+    weather: {
+        type: String,
+        required: true
     }
 });
 
+const icons = ref(
+    new Map([
+        ['Thunderstorm', 'cloud-bolt'],
+        ['Drizzle', 'cloud-rain'],
+        ['Rain', 'cloud-sun-rain'],
+        ['Snow', 'snowflake'],
+        ['Clouds', 'cloud'],
+        ['Clear', 'sun'],
+        ['Mist', 'smog'],
+        ['Smoke', 'smog'],
+        ['Haze', 'smog'],
+        ['Fog', 'smog'],
+        ['Sand', 'smog'],
+        ['Dust', 'smog'],
+        ['Ash', 'smog'],
+        ['Squall', 'smog'],
+        ['Tornado', 'tornado'],
+    ])
+);
 </script>
 
 <style scoped>
@@ -44,8 +69,10 @@ const props = defineProps({
     text-transform: capitalize;
 }
 
-.weather-box img {
-    width: 60%;
+.weather-box .icon {
+    color: azure;
+    font-size: 10em;
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 </style>

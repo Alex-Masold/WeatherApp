@@ -1,11 +1,9 @@
-const src =  ['clear.png', 'cloud.png', 'drizzle.png', 'humidity.png', 'mist.png', 'rain.png', 'search.png', 'snow.png', 'wind.png'];
+const src =  ['clear', 'cloud', 'drizzle', 'mist', 'rain', 'snow'];
 
-const images = [];
+const images = new Map();
 
 src.forEach(image => {
-    let img = new Image();
-    img.src = image;
-    images.push(img);
+    images.set(image, image+'.png');
 })
-
-export default images;
+// console.log(images.get('clear'));
+export default images

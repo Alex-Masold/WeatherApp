@@ -2,7 +2,7 @@
     <div class="search-box">
         <custom-input v-model="NameCity" placeholder="Enter City Name" />
         <custom-button @click="hendleGetCity">
-            <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+            <slot></slot>
         </custom-button>
     </div>
 </template>
