@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" :class="classOblect">
         <search-box @search-city="hendleCityGet">
             <VProgressCircular indeterminate v-if="isLoading"></VProgressCircular>
             <font-awesome-icon icon="fa-solid fa-magnifying-glass" v-else />
@@ -11,7 +11,7 @@
             :weather="weather"
         />
 
-        <div class="weather-details">
+        <div class="weather-details" :class="classOblect">
             <weather-detail
                 class="humidity"
                 :column-value="humidity + '%'"
@@ -49,10 +49,10 @@ const windSpeed = ref(0);
 const humidity = ref(0);
 
 const isLoading = ref(false);
-const isActive = ref(true);
+const isActive = ref(false);
 
 const classOblect = reactive({
-    active: true,
+    'fadeIn': isActive.value,
     'non-active': !isActive.value
 });
 
@@ -86,6 +86,7 @@ async function fetching() {
         description.value = 'City not found';
     } finally {
         isLoading.value = false;
+        isActive.value = true;
     }
 }
 </script>
@@ -110,7 +111,7 @@ img {
     transition: 0.5s ease-out;
 }
 
-.non-active {
+.container .non-active {
     height: 13%;
 }
 
