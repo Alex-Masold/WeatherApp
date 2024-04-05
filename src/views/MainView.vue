@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <search-box />
+        <search-box @search-city="hendleCityGet" />
 
         <weather-box :temperature="temperature + '°C'" :description="city" />
 
@@ -25,17 +25,43 @@
 
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
 import SearchBox from '@/components/SearchBox.vue';
 import WeatherDetail from '@/components/WeatherDetail.vue';
 import WeatherBox from '@/components/WeatherBox.vue';
 
+const weather = ref({});
+
 const temperature = ref(10);
-const city = ref('Moscow');
+const city = ref('');
 
 const windValue = ref(10);
 const windName = ref('Wind Speed');
 const humidityValue = ref(50);
 const humidityName = ref('Humidity');
+
+function hendleCityGet(name) {
+    city.value = name;
+    fetching();
+}
+
+
+const apiKey = 'b1f8a36c21b3f9794820b0366dce7d12';
+async function fetching() {
+    try {
+        const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
+            params: {
+                q: city.value,
+                appid: apiKey
+            }
+        });
+
+		weather.value = response.data;
+        console.log(weather);
+    } catch (error) {
+        alert('City not found');
+    }
+}
 </script>
 
 <style scoped>

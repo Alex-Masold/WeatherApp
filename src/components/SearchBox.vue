@@ -1,7 +1,7 @@
 <template>
     <div class="search-box">
         <custom-input v-model="NameCity" placeholder="Enter City Name" />
-        <custom-button>
+        <custom-button @click="hendleGetCity">
             <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
         </custom-button>
     </div>
@@ -12,7 +12,13 @@ import { ref } from 'vue';
 import CustomInput from './UI/CustomInput.vue';
 import CustomButton from './UI/CustomButton.vue';
 
+const emit = defineEmits(['search-city']);
+
 const NameCity = ref('');
+
+function hendleGetCity() {
+    emit('search-city', NameCity.value);
+}
 </script>
 
 <style scoped>
