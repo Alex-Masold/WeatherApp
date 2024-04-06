@@ -1,17 +1,17 @@
 <template>
-    <div class="container" :class="classOblect">
+    <div class="container" :class="{'active': isActive, 'non-active': !isActive }">
         <search-box @search-city="hendleCityGet">
             <VProgressCircular indeterminate v-if="isLoading"></VProgressCircular>
             <font-awesome-icon icon="fa-solid fa-magnifying-glass" v-else />
         </search-box>
 
-        <weather-box :class="classOblect"
+        <weather-box class="weather-box" :class="{'fadeIn': isActive === true}"
             :temperature="parseInt(temperature)"
             :description="description"
             :weather="weather"
         />
 
-        <div class="weather-details" :class="classOblect">
+        <div class="weather-details" :class="{'fadeIn': isActive === true}">
             <weather-detail
                 class="humidity"
                 :column-value="humidity + '%'"
@@ -21,7 +21,7 @@
             </weather-detail>
             <weather-detail
                 class="wind"
-                :column-value="windSpeed + ' Km/h'"
+                :column-value="parseInt(windSpeed) + ' Km/h'"
                 :column-name="'Wind Speed'"
             >
                 <font-awesome-icon class="icon" icon="fa-solid fa-wind" />
@@ -51,11 +51,6 @@ const humidity = ref(0);
 const isLoading = ref(false);
 const isActive = ref(false);
 
-const classOblect = reactive({
-    'fadeIn': isActive.value,
-    'non-active': !isActive.value
-});
-
 function hendleCityGet(name) {
     city.value = name;
     fetching();
@@ -65,6 +60,7 @@ const apiKey = 'b1f8a36c21b3f9794820b0366dce7d12';
 async function fetching() {
     try {
         isLoading.value = true;
+        isActive.value = false;
         const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
             params: {
                 q: city.value,
@@ -111,10 +107,6 @@ img {
     transition: 0.5s ease-out;
 }
 
-.container .non-active {
-    height: 13%;
-}
-
 .weather-details {
     width: 100%;
     display: flex;
@@ -138,8 +130,15 @@ img {
     margin-top: 6px;
 }
 
-.weather-box .non-active,
-.weather-details .non-active{
+.non-active {
+    height: 13%;
+}
+.active{
+    height: 75%;
+}
+
+.weather-box,
+.weather-details{
     scale: 0;
     opacity: 0;
 }
