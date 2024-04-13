@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import axios from 'axios';
 import SearchBox from '@/components/SearchBox.vue';
 import WeatherDetail from '@/components/WeatherDetail.vue';
